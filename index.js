@@ -6,6 +6,7 @@ var blobService = azure.createBlobService();
 //Get Env Variables
 var url2Browse = process.env.URL;
 var storage_container = process.env.STORAGE_CONTAINER;
+var snapshot_path = process.env.SNAPSHOT_PATH;
 var snapshot_name = process.env.SNAPSHOT_NAME;
 
 const puppeteer = require('puppeteer');
@@ -32,16 +33,15 @@ const puppeteer = require('puppeteer');
     console.log("[Puppeteer] Taking Snapshot");
     await page.screenshot({path: '/screenshots/' + snapshot_name + '.png', fullPage: true});
 
-    await blobService.createBlockBlobFromLocalFile(storage_container, 'taskblob', '/screenshots/' + snapshot_name + '.png', function(error, result, response) {
+    await blobService.createBlockBlobFromLocalFile(storage_container, snapshot_path + snapshot_name + '.png', '/screenshots/' + snapshot_name + '.png', function(error, result, response) {
         if (!error) {
           // file uploaded
-          ("[Puppeteer] Snapshot Uploaded!");
+          console.log("[Puppeteer] Snapshot Uploaded!");
         } else {
-            ("[Puppeteer] Error Uploading Snapshot: " + error);
+            console.log("[Puppeteer] Error Uploading Snapshot: " + error);
         }
+        console.log("[Puppeteer] End");
       });
     
-    await browser.close();
-    console.log("[Puppeteer] End");
-    
+    await browser.close();    
 })();
