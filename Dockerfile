@@ -13,6 +13,8 @@ apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 RUN yarn global add puppeteer@1.20.0 && yarn cache clean
 
+RUN npm install azure-storage -g
+
 ENV NODE_PATH="/usr/local/share/.config/yarn/global/node_modules:${NODE_PATH}"
 
 ENV PATH="/tools:${PATH}"
