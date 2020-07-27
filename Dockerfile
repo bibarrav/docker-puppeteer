@@ -27,7 +27,7 @@ COPY --chown=pptruser:pptruser ./tools /tools
 ENV LANG="C.UTF-8"
 
 WORKDIR /app
-
+ADD index.js .
 # Add user so we don't need --no-sandbox.
 RUN mkdir /screenshots \
 	&& mkdir -p /home/pptruser/Downloads \
